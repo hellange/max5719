@@ -44,6 +44,9 @@ void sendDataOverSPI(uint32_t data) {
   val2 = (uint8_t)((data2 >> 8) & 0xFF);
   val3 = (uint8_t)((data2 >>  0) & 0xFF);
 
+  SPI.beginTransaction(settingsA);
+  digitalWrite (10, LOW);
+  
   SPI.transfer(val1); 
   SPI.transfer(val2);    
   SPI.transfer(val3);    
@@ -77,9 +80,6 @@ void loop() {
   } else if (volt < 0.0) {
     inc = -inc;
   }
-
-  SPI.beginTransaction(settingsA);
-  digitalWrite (10, LOW);
 
   uint32_t code = voltToCode(volt);
   sendDataOverSPI(code);
